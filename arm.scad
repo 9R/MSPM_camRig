@@ -54,25 +54,16 @@ module connector () {
 
 module connector180 () {
   translate ([pWidth+7,0,pWidth]){
-    //translate ([pWidth+8,0,pWidth]){
     rotate ([0,180,0]){
-      connector() ;
+      connector();
     }
   }
-  }
+}
 
 module arm () {
-
-  difference () {
-    union () {
-      translate ([0,-pHeight/2,0]) {
-        cube ([length, pHeight, pWidth]);
-      }
-    }
-    translate ([0,0,pWidth/2]) {
-      rotate ([0,90,0]){
-        cylinder (d=pWidth-2, h=length );
-      }
+  union () {
+    translate ([0,-pHeight/2,0]) {
+      cube ([length, pHeight, pWidth]);
     }
   }
 }
@@ -95,6 +86,16 @@ difference () {
   }
   //holes
   union () {
+
+    translate ([pWidth+2,pHeight/2,]) {
+      rotate ([0,0,angle]) {
+        translate ([0,0,pWidth/2]) {
+          rotate ([0,90,0]){
+            cylinder (d=pWidth-2, h=length );
+          }
+        }
+      }
+    }
     for ( i = [0:pHeight:length] ) {
       translate ([12,pHeight/2,-1]){
         rotate ([0,0,angle]) {
