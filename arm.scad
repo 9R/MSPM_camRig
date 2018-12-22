@@ -2,9 +2,9 @@
 $fa=1;
 $fs=0.1;
 
-length=90;
+length=50;
 
-angle=30;
+angle=45;
 
 pHeight=11;
 pWidth=10;
@@ -86,12 +86,14 @@ difference () {
   }
   //holes
   union () {
-
+    // arm cavity
     translate ([pWidth+2,pHeight/2,]) {
       rotate ([0,0,angle]) {
-        translate ([0,0,pWidth/2]) {
+        translate ([pWidth/2,0,pWidth/2]) {
           rotate ([0,90,0]){
-            cylinder (d=pWidth-2, h=length );
+            scale ([]) {
+              cylinder (d=pWidth-2, h=length-pWidth );
+            }
           }
         }
       }
@@ -100,12 +102,12 @@ difference () {
       translate ([12,pHeight/2,-1]){
         rotate ([0,0,angle]) {
           translate ([i,0,0]) {
-            //horizontal-holes
+            //horizontal arm-holes
             cylinder (d=pHeight-2,h=pWidth+2);
-            if ( i > 0 && i < length-pWidth  ) {
+            if ( i > 0 || i > length-pWidth  ) {
               translate ([0,0,pHeight/2]) {
                 rotate ([90,0,0]) {
-                  //"vertical-holes
+                  //"vertical arm-holes
                   cylinder (d=pWidth-2,h=pWidth *2,center=true);
                 }
               }
