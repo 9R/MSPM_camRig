@@ -1,6 +1,6 @@
 
 $fa=1;
-$fs=0.1;
+$fs=0.3;
 
 length=50;
 
@@ -91,7 +91,7 @@ difference () {
     // arm cavity
     translate ([pWidth+2,pHeight/2,]) {
       rotate ([0,0,angle]) {
-        translate ([pWidth/2,0,pWidth/2]) {
+        translate ([pWidth/8,0,pWidth/2]) {
           rotate ([0,90,0]){
             scale ([1,pRatio,1]) {
               cylinder (d=pWidth-2, h=length-pWidth );
