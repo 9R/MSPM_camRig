@@ -52,7 +52,6 @@ module connector () {
   }
 }
 
-
 module connector180 () {
   translate ([pWidth+7,0,pWidth]){
     //translate ([pWidth+8,0,pWidth]){
@@ -62,49 +61,57 @@ module connector180 () {
   }
   }
 
-  module arm () {
-    union () {
-      translate ([0,-pHeight/2,0]) {
-        cube ([length, pHeight, pWidth]);
-
-      }
-    }
-  }
-
-
-  module platform () {
-  }
+module arm () {
 
   difference () {
     union () {
-      connector () ;
-      translate ([pWidth+2,pHeight/2,]) {
-        rotate ([0,0,angle]) {
-          arm() ;
-        }
-        translate ([cos(angle)*length-pWidth/2,sin(angle)*length-pHeight/2,0 ]) {
-          //    cube ([pWidth,pHeight,pWidth]);
-          connector180() ;   
-        }
+      translate ([0,-pHeight/2,0]) {
+        cube ([length, pHeight, pWidth]);
       }
     }
-    union () {
-      for ( i = [0:pHeight:length] ) {
-        translate ([12,pHeight/2,-1]){
-          rotate ([0,0,angle]) {
-            translate ([i,0,0]) {
-              cylinder (d=pHeight-2,h=pWidth+2);
-              if ( i>0 && i<length-pWidth  ) {
+    translate ([0,0,pWidth/2]) {
+      rotate ([0,90,0]){
+        cylinder (d=pWidth-2, h=length );
+      }
+    }
+  }
+}
+
+
+module platform () {
+}
+
+difference () {
+  union () {
+    connector () ;
+    translate ([pWidth+2,pHeight/2,]) {
+      rotate ([0,0,angle]) {
+        arm() ;
+      }
+      translate ([cos(angle)*length-pWidth/2,sin(angle)*length-pHeight/2,0 ]) {
+        connector180() ;   
+      }
+    }
+  }
+  //holes
+  union () {
+    for ( i = [0:pHeight:length] ) {
+      translate ([12,pHeight/2,-1]){
+        rotate ([0,0,angle]) {
+          translate ([i,0,0]) {
+            //horizontal-holes
+            cylinder (d=pHeight-2,h=pWidth+2);
+            if ( i > 0 && i < length-pWidth  ) {
               translate ([0,0,pHeight/2]) {
-              rotate ([90,0,0]) {
-              cylinder (d=pWidth-2,h=pWidth *2,center=true);
-              }
-              }
+                rotate ([90,0,0]) {
+                  //"vertical-holes
+                  cylinder (d=pWidth-2,h=pWidth *2,center=true);
+                }
               }
             }
           }
         }
       }
-
     }
   }
+}
