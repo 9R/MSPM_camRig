@@ -9,6 +9,8 @@ angle=45;
 pHeight=11;
 pWidth=10;
 
+pRatio=pHeight/pWidth ;
+
 gap=2.5;
 
 module  hole (d,h) {
@@ -91,7 +93,7 @@ difference () {
       rotate ([0,0,angle]) {
         translate ([pWidth/2,0,pWidth/2]) {
           rotate ([0,90,0]){
-            scale ([]) {
+            scale ([1,pRatio,1]) {
               cylinder (d=pWidth-2, h=length-pWidth );
             }
           }
