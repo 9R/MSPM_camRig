@@ -107,7 +107,7 @@ difference () {
             //horizontal arm-holes
             cylinder (d=pHeight-2,h=pWidth+2);
             if ( i > 0 || i > length-pWidth  ) {
-              translate ([0,0,pHeight/2]) {
+              translate ([0,0,pWidth/2+1]) {
                 rotate ([90,0,0]) {
                   //"vertical arm-holes
                   cylinder (d=pWidth-2,h=pWidth *2,center=true);
