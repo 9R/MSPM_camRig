@@ -41,7 +41,7 @@ module connector () {
       //screwhole
       translate ([0,-1,pWidth/2]) {
         rotate ([-90,0,0]){
-          M3hole (pWidth+2);
+          M3hole (pHeight+2);
         }
       }
       //connectorSlits
