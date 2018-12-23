@@ -7,6 +7,8 @@ bHeight=2;
 
 gap =2.5;
 
+//basic modules
+//##############
 module  hole (d,h) {
   cylinder (d=d,h=h) ;
 }
@@ -15,6 +17,9 @@ module M3hole (h) {
   hole (3.6,h);
 }
 
+//part definiton
+//##############
+//base
 module base (thickness) {
   //scale to 1cm thickness
   scale ([1,1,thickness*10]) {
@@ -46,6 +51,7 @@ module base (thickness) {
   }
 }
 
+//connector
 module connector () {
   module outerShape() {
     union () {
@@ -59,7 +65,7 @@ module connector () {
       }
     }
   }
-  module connectorSlits() {
+  module connectorGaps() {
     union () {
       for ( i = [0:2+gap:cHeight] ) {
         translate ([-cWidth/2-1,-2-i-0.01,bHeight]) {
@@ -68,7 +74,6 @@ module connector () {
       }
     }
   }
-
   module boltHole() {
     translate ([0,1,cWidth*1]) {
       rotate ([90,0,0]) {
@@ -83,7 +88,7 @@ module connector () {
     }
     union () {
       boltHole();
-      connectorSlits() ;
+      connectorGaps() ;
     }
   }
 }
