@@ -36,7 +36,7 @@ module connector2x (cWidth,cHeight,gap) {
     }
   }
   module boltHole() {
-    translate ([0,1,cWidth*1]) {
+    translate ([0,1,cWidth]) {
       rotate ([90,0,0]) {
         M3hole(cHeight+2) ;
       }
@@ -44,22 +44,70 @@ module connector2x (cWidth,cHeight,gap) {
   }
 
   translate ([0,cWidth/2,0]){
-  difference () {
-    union () {
-      outerShape () ;
+    difference () {
+      union () {
+        outerShape () ;
+      }
+      union () {
+        boltHole();
+        connectorGaps() ;
+      }
     }
-    union () {
-      boltHole();
-      connectorGaps() ;
-    }
-  }
   }
 }
 
+module connector3x (cHeight,cWidth,gap) {
+    module outerShape () {
+      //roundedEnd
+      translate ([0,0,cWidth/2]) {
+        rotate ([-90,0,0]) {
+          cylinder (d=cWidth, h=cHeight) ;
+        }
+      }
+      //connection
+      cube ([cWidth+2,cHeight,cWidth]) ;
+      //connection round
+      translate ([cWidth+2,cHeight/2,0]){
+        cylinder (d=cHeight,h=cWidth);
+      }
+
+    }
+    module connectorGaps () {
+      //connectorSlits
+      for ( i = [0:2+gap:5] ) {
+        translate ([-cWidth/2,2+i,-1]){
+          cube ([cWidth+1,gap,cWidth+2]);
+        }
+      }
+
+    }
+    module screwHoles () {
+      //screwhole
+      translate ([0,-1,cWidth/2]) {
+        rotate ([-90,0,0]){
+          M3hole (cHeight+2);
+        }
+      }
+    }
+  
+  translate ([0,-cWidth/2-.2,-cWidth/2+cHeight]) {
+    difference () {
+      union () {
+        outerShape ();
+      }
+
+      union () {
+        connectorGaps();
+        screwHoles() ;
+      }
+    }
+  }
+}
 
 color ("lime",0.5) {
-connector2x (11,10,2.5);
+  connector2x (11,10,2.5);
 }
 
 color ("orange",0.5) {
+  connector3x (11,10,2.5);
 }
