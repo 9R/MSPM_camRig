@@ -1,3 +1,5 @@
+use <connector.scad>;
+
 $fa=1;
 $fs=0.4;
 
@@ -51,49 +53,9 @@ module base (thickness) {
   }
 }
 
-//connector
-module connector () {
-  module outerShape() {
-    union () {
-      translate ([0,0,cWidth]) {
-        rotate ([90,0,0]) {
-          cylinder (d=cWidth,h=cHeight) ;
-        }
-      }
-      translate ([-cWidth/2,-cHeight,0]) {
-        cube  ([cWidth,cHeight,cWidth]) ;
-      }
-    }
-  }
-  module connectorGaps() {
-    union () {
-      for ( i = [0:2+gap:cHeight] ) {
-        translate ([-cWidth/2-1,-2-i-0.01,bHeight]) {
-          cube ([cWidth+2,gap,cHeight+2]);
-        }
-      }
-    }
-  }
-  module boltHole() {
-    translate ([0,1,cWidth*1]) {
-      rotate ([90,0,0]) {
-        M3hole(cHeight+2) ;
-      }
-    }
-  }
-
-  difference () {
-    union () {
-      outerShape () ;
-    }
-    union () {
-      boltHole();
-      connectorGaps() ;
-    }
-  }
-}
-
 union () {
   base(bHeight);
-  connector ();
+  translate ([0,-5,0.1]) {
+  connector2x (cWidth,cHeight,gap);
+}
 }
