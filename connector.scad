@@ -26,6 +26,13 @@ module connector2x (cWidth,cHeight,gap) {
       }
     }
   }
+
+  module base ()  {
+    translate ([-cWidth/2,-cHeight,0]) {
+    cube ([cWidth,cHeight,cWidth/2-0.5]);
+    }
+  }
+
   module connectorGaps() {
     union () {
       for ( i = [0:2+gap:cHeight] ) {
@@ -44,6 +51,8 @@ module connector2x (cWidth,cHeight,gap) {
   }
 
   translate ([0,cWidth/2,0]){
+  union () {
+    base () ;
     difference () {
       union () {
         outerShape () ;
@@ -53,6 +62,7 @@ module connector2x (cWidth,cHeight,gap) {
         connectorGaps() ;
       }
     }
+  }
   }
 }
 
